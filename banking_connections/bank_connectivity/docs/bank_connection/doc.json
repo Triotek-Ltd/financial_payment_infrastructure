@@ -1,0 +1,27 @@
+{
+  "doc_key": "bank_connection",
+  "doc_title": "Bank Connection",
+  "doc_kind": "configuration",
+  "status": "draft",
+  "module_id": "banking_connections",
+  "submodule_id": "bank_connectivity",
+  "app_id": "financial_payment_infrastructure",
+  "base_action_profile": "base_record_actions",
+  "doc_archetype": "configuration",
+  "classification": {
+    "archetype": "configuration",
+    "bundle": "integration"
+  },
+  "planning_source": {
+    "type": "reference_doc_generation_manifest",
+    "bundle": "integration",
+    "app": "financial_payment_infrastructure",
+    "module": "banking_connections",
+    "submodule": "bank_connectivity",
+    "reference_doc_id": "bank_connection",
+    "evidence_gaps": [
+      "credential rotation rules",
+      "connectivity health semantics"
+    ]
+  }
+}

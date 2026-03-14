@@ -1,0 +1,27 @@
+{
+  "doc_key": "processor_account",
+  "doc_title": "Processor Account",
+  "doc_kind": "configuration",
+  "status": "draft",
+  "module_id": "payment_processors",
+  "submodule_id": "processor_payments",
+  "app_id": "financial_payment_infrastructure",
+  "base_action_profile": "base_record_actions",
+  "doc_archetype": "configuration",
+  "classification": {
+    "archetype": "configuration",
+    "bundle": "integration"
+  },
+  "planning_source": {
+    "type": "reference_doc_generation_manifest",
+    "bundle": "integration",
+    "app": "financial_payment_infrastructure",
+    "module": "payment_processors",
+    "submodule": "processor_payments",
+    "reference_doc_id": "processor_account",
+    "evidence_gaps": [
+      "secret-rotation policy",
+      "account-scope modeling"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "id": "processor_events",
+  "title": "Processor Events",
+  "app_id": "financial_payment_infrastructure",
+  "module_id": "payment_processors",
+  "type": "submodule",
+  "status": "draft"
+}

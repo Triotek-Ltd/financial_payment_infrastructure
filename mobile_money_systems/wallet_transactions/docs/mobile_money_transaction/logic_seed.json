@@ -1,0 +1,124 @@
+{
+  "doc_id": "mobile_money_transaction",
+  "doc_title": "Mobile Money Transaction",
+  "archetype": "transaction",
+  "doc_kind": "transaction",
+  "actions": [
+    "create",
+    "submit",
+    "confirm",
+    "reverse",
+    "settle",
+    "archive"
+  ],
+  "lifecycle": {
+    "initial_state": "initiated",
+    "states": [
+      "initiated",
+      "pending",
+      "successful",
+      "failed",
+      "settled",
+      "reversed",
+      "archived"
+    ],
+    "terminal_states": [
+      "reversed",
+      "archived"
+    ]
+  },
+  "related_doc_count": 4,
+  "fetch_rule_count": 0,
+  "action_handler_count": 6,
+  "archetype_profile": {
+    "workflow_profile": {
+      "mode": "transaction_flow",
+      "supports_submission": true
+    },
+    "reporting_profile": {
+      "supports_snapshots": true,
+      "supports_outputs": true
+    },
+    "integration_profile": {
+      "external_sync_enabled": true,
+      "tracks_external_refs": true
+    },
+    "lifecycle_states": [
+      "initiated",
+      "pending",
+      "successful",
+      "failed",
+      "settled",
+      "reversed",
+      "archived"
+    ],
+    "is_transactional": true
+  },
+  "contract_summary": {
+    "title_field": "title",
+    "status_field": "workflow_state",
+    "reference_field": "reference_no",
+    "required_fields": [
+      "title",
+      "workflow_state",
+      "transaction_date"
+    ],
+    "field_purposes": {
+      "workflow_state": "lifecycle_state",
+      "transaction_date": "transaction_date",
+      "party": "primary_party",
+      "currency": "currency_code",
+      "total_amount": "total_amount",
+      "provider_status": "status_flag"
+    },
+    "search_fields": [
+      "title",
+      "reference_no",
+      "description",
+      "transaction_code",
+      "customer_or_wallet_reference",
+      "amount"
+    ],
+    "list_columns": [
+      "title",
+      "reference_no",
+      "transaction_date",
+      "party",
+      "total_amount",
+      "workflow_state"
+    ],
+    "initial_state": "initiated",
+    "lifecycle_states": [
+      "initiated",
+      "pending",
+      "successful",
+      "failed",
+      "settled",
+      "reversed",
+      "archived"
+    ],
+    "terminal_states": [
+      "reversed",
+      "archived"
+    ],
+    "action_targets": {
+      "create": null,
+      "submit": null,
+      "confirm": null,
+      "reverse": "reversed",
+      "settle": null,
+      "archive": "archived"
+    }
+  },
+  "workflow_hints": {},
+  "related_docs": [
+    "wallet_provider_profile",
+    "wallet_reversal_case",
+    "wallet_settlement",
+    "payment_attempt"
+  ],
+  "borrowed_fields": [
+    "provider context from wallet_provider_profile",
+    "checkout/payment context from linked commerce records"
+  ]
+}

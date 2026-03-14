@@ -1,0 +1,8 @@
+{
+  "id": "card_authorization",
+  "title": "Card Authorization",
+  "app_id": "financial_payment_infrastructure",
+  "module_id": "card_payment_networks",
+  "type": "submodule",
+  "status": "draft"
+}

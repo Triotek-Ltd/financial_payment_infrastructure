@@ -1,0 +1,27 @@
+{
+  "doc_key": "card_network_profile",
+  "doc_title": "Card Network Profile",
+  "doc_kind": "configuration",
+  "status": "draft",
+  "module_id": "card_payment_networks",
+  "submodule_id": "card_authorization",
+  "app_id": "financial_payment_infrastructure",
+  "base_action_profile": "base_record_actions",
+  "doc_archetype": "configuration",
+  "classification": {
+    "archetype": "configuration",
+    "bundle": "integration"
+  },
+  "planning_source": {
+    "type": "reference_doc_generation_manifest",
+    "bundle": "integration",
+    "app": "financial_payment_infrastructure",
+    "module": "card_payment_networks",
+    "submodule": "card_authorization",
+    "reference_doc_id": "card_network_profile",
+    "evidence_gaps": [
+      "merchant-hierarchy model",
+      "terminal/acquirer mapping"
+    ]
+  }
+}

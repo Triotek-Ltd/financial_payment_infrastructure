@@ -1,0 +1,8 @@
+{
+  "id": "wallet_transactions",
+  "title": "Wallet Transactions",
+  "app_id": "financial_payment_infrastructure",
+  "module_id": "mobile_money_systems",
+  "type": "submodule",
+  "status": "draft"
+}

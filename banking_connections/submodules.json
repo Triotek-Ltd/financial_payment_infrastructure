@@ -1,0 +1,6 @@
+{
+  "submodules": [
+    "bank_connectivity",
+    "settlement_control"
+  ]
+}

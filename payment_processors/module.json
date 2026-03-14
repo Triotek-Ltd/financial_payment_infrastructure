@@ -1,0 +1,8 @@
+{
+  "id": "payment_processors",
+  "title": "Payment Processors",
+  "app_id": "financial_payment_infrastructure",
+  "type": "module",
+  "status": "draft",
+  "supports_submodules": true
+}

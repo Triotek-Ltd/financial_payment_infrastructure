@@ -1,0 +1,27 @@
+{
+  "doc_key": "wallet_provider_profile",
+  "doc_title": "Wallet Provider Profile",
+  "doc_kind": "configuration",
+  "status": "draft",
+  "module_id": "mobile_money_systems",
+  "submodule_id": "wallet_transactions",
+  "app_id": "financial_payment_infrastructure",
+  "base_action_profile": "base_record_actions",
+  "doc_archetype": "configuration",
+  "classification": {
+    "archetype": "configuration",
+    "bundle": "integration"
+  },
+  "planning_source": {
+    "type": "reference_doc_generation_manifest",
+    "bundle": "integration",
+    "app": "financial_payment_infrastructure",
+    "module": "mobile_money_systems",
+    "submodule": "wallet_transactions",
+    "reference_doc_id": "wallet_provider_profile",
+    "evidence_gaps": [
+      "float-account mapping",
+      "callback validation rules"
+    ]
+  }
+}

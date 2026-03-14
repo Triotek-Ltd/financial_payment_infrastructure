@@ -1,0 +1,8 @@
+{
+  "id": "settlement_control",
+  "title": "Settlement Control",
+  "app_id": "financial_payment_infrastructure",
+  "module_id": "banking_connections",
+  "type": "submodule",
+  "status": "draft"
+}

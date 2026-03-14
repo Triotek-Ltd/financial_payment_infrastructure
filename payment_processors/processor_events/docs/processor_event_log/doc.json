@@ -1,0 +1,27 @@
+{
+  "doc_key": "processor_event_log",
+  "doc_title": "Processor Event Log",
+  "doc_kind": "ledger",
+  "status": "draft",
+  "module_id": "payment_processors",
+  "submodule_id": "processor_events",
+  "app_id": "financial_payment_infrastructure",
+  "base_action_profile": "base_record_actions",
+  "doc_archetype": "ledger",
+  "classification": {
+    "archetype": "ledger",
+    "bundle": "integration"
+  },
+  "planning_source": {
+    "type": "reference_doc_generation_manifest",
+    "bundle": "integration",
+    "app": "financial_payment_infrastructure",
+    "module": "payment_processors",
+    "submodule": "processor_events",
+    "reference_doc_id": "processor_event_log",
+    "evidence_gaps": [
+      "event-deduplication",
+      "replay protection rules"
+    ]
+  }
+}

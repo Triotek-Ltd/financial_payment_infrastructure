@@ -1,0 +1,28 @@
+{
+  "doc_key": "payment_intent_record",
+  "doc_title": "Payment Intent Record",
+  "doc_kind": "transaction",
+  "status": "draft",
+  "module_id": "payment_processors",
+  "submodule_id": "processor_payments",
+  "app_id": "financial_payment_infrastructure",
+  "base_action_profile": "base_record_actions",
+  "doc_archetype": "transaction",
+  "classification": {
+    "archetype": "transaction",
+    "bundle": "integration"
+  },
+  "planning_source": {
+    "type": "reference_doc_generation_manifest",
+    "bundle": "integration",
+    "app": "financial_payment_infrastructure",
+    "module": "payment_processors",
+    "submodule": "processor_payments",
+    "reference_doc_id": "payment_intent_record",
+    "evidence_gaps": [
+      "idempotency",
+      "capture",
+      "multi-step confirmation semantics"
+    ]
+  }
+}

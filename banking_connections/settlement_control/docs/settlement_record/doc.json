@@ -1,0 +1,27 @@
+{
+  "doc_key": "settlement_record",
+  "doc_title": "Settlement Record",
+  "doc_kind": "transaction",
+  "status": "draft",
+  "module_id": "banking_connections",
+  "submodule_id": "settlement_control",
+  "app_id": "financial_payment_infrastructure",
+  "base_action_profile": "base_record_actions",
+  "doc_archetype": "transaction",
+  "classification": {
+    "archetype": "transaction",
+    "bundle": "integration"
+  },
+  "planning_source": {
+    "type": "reference_doc_generation_manifest",
+    "bundle": "integration",
+    "app": "financial_payment_infrastructure",
+    "module": "banking_connections",
+    "submodule": "settlement_control",
+    "reference_doc_id": "settlement_record",
+    "evidence_gaps": [
+      "settlement-batch composition",
+      "reconciliation keys"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "modules": [
+    "banking_connections",
+    "card_payment_networks",
+    "mobile_money_systems",
+    "payment_processors"
+  ]
+}

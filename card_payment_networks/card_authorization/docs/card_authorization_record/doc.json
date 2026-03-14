@@ -1,0 +1,27 @@
+{
+  "doc_key": "card_authorization_record",
+  "doc_title": "Card Authorization Record",
+  "doc_kind": "transaction",
+  "status": "draft",
+  "module_id": "card_payment_networks",
+  "submodule_id": "card_authorization",
+  "app_id": "financial_payment_infrastructure",
+  "base_action_profile": "base_record_actions",
+  "doc_archetype": "transaction",
+  "classification": {
+    "archetype": "transaction",
+    "bundle": "integration"
+  },
+  "planning_source": {
+    "type": "reference_doc_generation_manifest",
+    "bundle": "integration",
+    "app": "financial_payment_infrastructure",
+    "module": "card_payment_networks",
+    "submodule": "card_authorization",
+    "reference_doc_id": "card_authorization_record",
+    "evidence_gaps": [
+      "partial capture/refund handling",
+      "card-present/card-not-present distinctions"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "docs": [
+    "card_authorization_record",
+    "card_network_profile",
+    "terminal_settlement",
+    "chargeback_case"
+  ]
+}

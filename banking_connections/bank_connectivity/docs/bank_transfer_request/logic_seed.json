@@ -1,0 +1,120 @@
+{
+  "doc_id": "bank_transfer_request",
+  "doc_title": "Bank Transfer Request",
+  "archetype": "workflow_case",
+  "doc_kind": "workflow_case",
+  "actions": [
+    "create",
+    "submit",
+    "review",
+    "approve",
+    "release",
+    "cancel",
+    "close",
+    "archive"
+  ],
+  "lifecycle": {
+    "initial_state": "draft",
+    "states": [
+      "draft",
+      "approved",
+      "submitted",
+      "completed",
+      "failed",
+      "reversed",
+      "archived"
+    ],
+    "terminal_states": [
+      "reversed",
+      "archived"
+    ]
+  },
+  "related_doc_count": 4,
+  "fetch_rule_count": 0,
+  "action_handler_count": 8,
+  "archetype_profile": {
+    "workflow_profile": {
+      "mode": "case_flow",
+      "supports_assignment": true,
+      "supports_escalation": true
+    },
+    "reporting_profile": {
+      "supports_snapshots": true,
+      "supports_outputs": false
+    },
+    "integration_profile": {
+      "external_sync_enabled": false
+    },
+    "lifecycle_states": [
+      "draft",
+      "approved",
+      "submitted",
+      "completed",
+      "failed",
+      "reversed",
+      "archived"
+    ],
+    "is_transactional": false
+  },
+  "contract_summary": {
+    "title_field": "title",
+    "status_field": "workflow_state",
+    "reference_field": "reference_no",
+    "required_fields": [
+      "title",
+      "workflow_state"
+    ],
+    "field_purposes": {
+      "workflow_state": "lifecycle_state"
+    },
+    "search_fields": [
+      "title",
+      "reference_no",
+      "description",
+      "request_code",
+      "source_connection",
+      "source_account"
+    ],
+    "list_columns": [
+      "title",
+      "reference_no",
+      "workflow_state",
+      "modified"
+    ],
+    "initial_state": "draft",
+    "lifecycle_states": [
+      "draft",
+      "approved",
+      "submitted",
+      "completed",
+      "failed",
+      "reversed",
+      "archived"
+    ],
+    "terminal_states": [
+      "reversed",
+      "archived"
+    ],
+    "action_targets": {
+      "create": null,
+      "submit": "submitted",
+      "review": null,
+      "approve": "approved",
+      "release": null,
+      "cancel": null,
+      "close": null,
+      "archive": "archived"
+    }
+  },
+  "workflow_hints": {},
+  "related_docs": [
+    "bank_connection",
+    "settlement_record",
+    "supplier_payment",
+    "treasury_movement"
+  ],
+  "borrowed_fields": [
+    "source account",
+    "institution from bank_connection"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "doc_key": "wallet_reversal_case",
+  "doc_title": "Wallet Reversal Case",
+  "doc_kind": "workflow_case",
+  "status": "draft",
+  "module_id": "mobile_money_systems",
+  "submodule_id": "wallet_transactions",
+  "app_id": "financial_payment_infrastructure",
+  "base_action_profile": "base_record_actions",
+  "doc_archetype": "workflow_case",
+  "classification": {
+    "archetype": "workflow_case",
+    "bundle": "integration"
+  },
+  "planning_source": {
+    "type": "reference_doc_generation_manifest",
+    "bundle": "integration",
+    "app": "financial_payment_infrastructure",
+    "module": "mobile_money_systems",
+    "submodule": "wallet_transactions",
+    "reference_doc_id": "wallet_reversal_case",
+    "evidence_gaps": [
+      "reversal windows",
+      "provider-specific dispute paths"
+    ]
+  }
+}

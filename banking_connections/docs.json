@@ -1,0 +1,8 @@
+{
+  "docs": [
+    "bank_connection",
+    "bank_transfer_request",
+    "bank_webhook_event",
+    "settlement_record"
+  ]
+}

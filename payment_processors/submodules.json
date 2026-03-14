@@ -1,0 +1,6 @@
+{
+  "submodules": [
+    "processor_events",
+    "processor_payments"
+  ]
+}
