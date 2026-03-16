@@ -11,7 +11,7 @@ TERMINAL_STATES = ['reversed', 'closed', 'archived']
 ACTION_RULES = {'create': {'allowed_in_states': ['opened', 'investigating', 'rejected'], 'transitions_to': None}, 'assign': {'allowed_in_states': ['opened', 'investigating', 'rejected'], 'transitions_to': None}, 'investigate': {'allowed_in_states': ['opened', 'investigating', 'rejected'], 'transitions_to': None}, 'reverse': {'allowed_in_states': ['opened', 'investigating', 'rejected'], 'transitions_to': 'reversed'}, 'reject': {'allowed_in_states': ['opened', 'investigating', 'rejected'], 'transitions_to': 'rejected'}, 'close': {'allowed_in_states': ['opened', 'investigating', 'rejected'], 'transitions_to': 'closed'}, 'archive': {'allowed_in_states': ['opened', 'investigating', 'rejected'], 'transitions_to': 'archived'}}
 
 STATE_FIELD = 'workflow_state'
-WORKFLOW_HINTS = {}
+WORKFLOW_HINTS = {'relation_context': {'related_docs': ['mobile_money_transaction', 'wallet_settlement'], 'borrowed_fields': ['transaction identity', 'status from mobile_money_transaction'], 'inferred_roles': ['case owner']}, 'actors': ['case owner'], 'action_actors': {'create': ['case owner'], 'assign': ['case owner'], 'reverse': ['case owner'], 'reject': ['case owner'], 'close': ['case owner'], 'archive': ['case owner']}}
 
 class WorkflowService:
     def allowed_actions_for_state(self, state: str | None) -> list[str]:

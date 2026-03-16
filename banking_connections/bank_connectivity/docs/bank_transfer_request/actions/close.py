@@ -8,7 +8,7 @@ ACTION_ID = "close"
 ACTION_RULE = {'allowed_in_states': ['draft', 'approved', 'submitted', 'completed', 'failed'], 'transitions_to': None}
 
 STATE_FIELD = 'workflow_state'
-WORKFLOW_HINTS = {}
+WORKFLOW_HINTS = {'relation_context': {'related_docs': ['bank_connection', 'settlement_record', 'supplier_payment', 'treasury_movement'], 'borrowed_fields': ['source account', 'institution from bank_connection'], 'inferred_roles': ['procurement officer', 'finance officer']}, 'actors': ['procurement officer', 'finance officer'], 'action_actors': {'create': ['procurement officer'], 'submit': ['procurement officer'], 'review': ['finance officer'], 'approve': ['finance officer'], 'cancel': ['procurement officer'], 'close': ['procurement officer'], 'archive': ['procurement officer']}}
 
 def handle_close(payload: dict, context: dict | None = None) -> dict:
     context = context or {}

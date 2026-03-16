@@ -65,7 +65,11 @@
       "workflow_state"
     ],
     "field_purposes": {
-      "workflow_state": "lifecycle_state"
+      "workflow_state": "lifecycle_state",
+      "related_bank_connection": "relation_collection",
+      "related_settlement_record": "relation_collection",
+      "related_supplier_payment": "relation_collection",
+      "related_treasury_movement": "relation_collection"
     },
     "search_fields": [
       "title",
@@ -106,7 +110,53 @@
       "archive": "archived"
     }
   },
-  "workflow_hints": {},
+  "workflow_hints": {
+    "relation_context": {
+      "related_docs": [
+        "bank_connection",
+        "settlement_record",
+        "supplier_payment",
+        "treasury_movement"
+      ],
+      "borrowed_fields": [
+        "source account",
+        "institution from bank_connection"
+      ],
+      "inferred_roles": [
+        "procurement officer",
+        "finance officer"
+      ]
+    },
+    "actors": [
+      "procurement officer",
+      "finance officer"
+    ],
+    "action_actors": {
+      "create": [
+        "procurement officer"
+      ],
+      "submit": [
+        "procurement officer"
+      ],
+      "review": [
+        "finance officer"
+      ],
+      "approve": [
+        "finance officer"
+      ],
+      "cancel": [
+        "procurement officer"
+      ],
+      "close": [
+        "procurement officer"
+      ],
+      "archive": [
+        "procurement officer"
+      ]
+    }
+  },
+  "downstream_effects": [],
+  "action_side_effects_file": "side_effects.json",
   "related_docs": [
     "bank_connection",
     "settlement_record",

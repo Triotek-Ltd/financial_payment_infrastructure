@@ -8,7 +8,7 @@ ACTION_ID = "void"
 ACTION_RULE = {'allowed_in_states': ['initiated', 'authorized', 'captured', 'failed', 'settled'], 'transitions_to': None}
 
 STATE_FIELD = 'workflow_state'
-WORKFLOW_HINTS = {}
+WORKFLOW_HINTS = {'relation_context': {'related_docs': ['card_network_profile', 'chargeback_case', 'terminal_settlement', 'payment_attempt'], 'borrowed_fields': ['merchant', 'processor context from card_network_profile', 'checkout/payment context from payment_attempt'], 'inferred_roles': ['approver', 'finance officer', 'case owner']}, 'actors': ['approver', 'finance officer', 'case owner'], 'action_actors': {'create': ['approver'], 'reverse': ['case owner'], 'archive': ['case owner']}}
 
 def handle_void(payload: dict, context: dict | None = None) -> dict:
     context = context or {}

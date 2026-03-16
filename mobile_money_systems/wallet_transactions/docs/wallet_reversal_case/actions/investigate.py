@@ -8,7 +8,7 @@ ACTION_ID = "investigate"
 ACTION_RULE = {'allowed_in_states': ['opened', 'investigating', 'rejected'], 'transitions_to': None}
 
 STATE_FIELD = 'workflow_state'
-WORKFLOW_HINTS = {}
+WORKFLOW_HINTS = {'relation_context': {'related_docs': ['mobile_money_transaction', 'wallet_settlement'], 'borrowed_fields': ['transaction identity', 'status from mobile_money_transaction'], 'inferred_roles': ['case owner']}, 'actors': ['case owner'], 'action_actors': {'create': ['case owner'], 'assign': ['case owner'], 'reverse': ['case owner'], 'reject': ['case owner'], 'close': ['case owner'], 'archive': ['case owner']}}
 
 def handle_investigate(payload: dict, context: dict | None = None) -> dict:
     context = context or {}

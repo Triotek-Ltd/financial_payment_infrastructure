@@ -35,7 +35,32 @@
       "show_in_related_panel": true
     }
   ],
-  "lookup_rules": [],
+  "lookup_rules": [
+    {
+      "field_id": "related_card_network_profile",
+      "doc_id": "card_network_profile",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    },
+    {
+      "field_id": "related_chargeback_case",
+      "doc_id": "chargeback_case",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    },
+    {
+      "field_id": "related_terminal_settlement",
+      "doc_id": "terminal_settlement",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    },
+    {
+      "field_id": "related_payment_attempt",
+      "doc_id": "payment_attempt",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    }
+  ],
   "fetch_rules": [],
   "reference_map": {
     "primary_reference_field": "reference_no",
@@ -43,7 +68,12 @@
   },
   "relation_rules": {
     "parent_doc": null,
-    "child_docs": [],
+    "child_docs": [
+      "card_network_profile",
+      "chargeback_case",
+      "terminal_settlement",
+      "payment_attempt"
+    ],
     "show_related_panel": true
   },
   "borrowed_fields": [
@@ -70,6 +100,43 @@
   "runtime_hints": {
     "doc_key": "card_authorization_record",
     "supports_related_lookup": true,
-    "supports_fetch_rules": true
+    "supports_fetch_rules": true,
+    "workflow_hints": {
+      "relation_context": {
+        "related_docs": [
+          "card_network_profile",
+          "chargeback_case",
+          "terminal_settlement",
+          "payment_attempt"
+        ],
+        "borrowed_fields": [
+          "merchant",
+          "processor context from card_network_profile",
+          "checkout/payment context from payment_attempt"
+        ],
+        "inferred_roles": [
+          "approver",
+          "finance officer",
+          "case owner"
+        ]
+      },
+      "actors": [
+        "approver",
+        "finance officer",
+        "case owner"
+      ],
+      "action_actors": {
+        "create": [
+          "approver"
+        ],
+        "reverse": [
+          "case owner"
+        ],
+        "archive": [
+          "case owner"
+        ]
+      }
+    },
+    "action_side_effects_file": "side_effects.json"
   }
 }

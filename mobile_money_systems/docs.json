@@ -1,8 +1,8 @@
 {
   "docs": [
-    "wallet_settlement",
     "mobile_money_transaction",
     "wallet_provider_profile",
-    "wallet_reversal_case"
+    "wallet_reversal_case",
+    "wallet_settlement"
   ]
 }

@@ -5,9 +5,11 @@ from __future__ import annotations
 
 ARCHETYPE_PROFILE = {'workflow_profile': {'mode': 'configuration_control', 'case_management': False}, 'reporting_profile': {'supports_snapshots': False, 'supports_outputs': False}, 'integration_profile': {'external_sync_enabled': True}, 'lifecycle_states': ['draft', 'verified', 'active', 'disabled', 'archived'], 'is_transactional': False}
 
-CONTRACT = {'title_field': 'title', 'status_field': 'workflow_state', 'reference_field': 'reference_no', 'required_fields': ['title', 'workflow_state'], 'field_purposes': {'workflow_state': 'lifecycle_state', 'active_status': 'status_flag'}, 'search_fields': ['title', 'reference_no', 'description', 'connection_code', 'institution_identity', 'account_or_channel_scope'], 'list_columns': ['title', 'reference_no', 'workflow_state', 'modified'], 'initial_state': 'draft', 'lifecycle_states': ['draft', 'verified', 'active', 'disabled', 'archived'], 'terminal_states': ['archived'], 'action_targets': {'create': None, 'verify': None, 'activate': 'active', 'disable': None, 'archive': 'archived'}}
+CONTRACT = {'title_field': 'title', 'status_field': 'workflow_state', 'reference_field': 'reference_no', 'required_fields': ['title', 'workflow_state'], 'field_purposes': {'workflow_state': 'lifecycle_state', 'active_status': 'status_flag', 'related_settlement_record': 'relation_collection', 'related_bank_transfer_request': 'relation_collection', 'related_bank_webhook_event': 'relation_collection', 'related_cash_account': 'relation_collection'}, 'search_fields': ['title', 'reference_no', 'description', 'connection_code', 'institution_identity', 'account_or_channel_scope'], 'list_columns': ['title', 'reference_no', 'workflow_state', 'modified'], 'initial_state': 'draft', 'lifecycle_states': ['draft', 'verified', 'active', 'disabled', 'archived'], 'terminal_states': ['archived'], 'action_targets': {'create': None, 'verify': None, 'activate': 'active', 'disable': None, 'archive': 'archived'}}
 
-WORKFLOW_HINTS = {}
+WORKFLOW_HINTS = {'relation_context': {'related_docs': ['settlement_record', 'bank_transfer_request', 'bank_webhook_event', 'cash_account'], 'borrowed_fields': ['institution/account context from finance cash-account setup where linked'], 'inferred_roles': ['finance officer']}, 'actors': ['finance officer'], 'action_actors': {'create': ['finance officer'], 'verify': ['finance officer'], 'activate': ['finance officer'], 'archive': ['finance officer']}}
+
+SIDE_EFFECT_HINTS = {'downstream_effects': [], 'related_docs': ['settlement_record', 'bank_transfer_request', 'bank_webhook_event', 'cash_account'], 'action_targets': {'create': None, 'verify': None, 'activate': 'active', 'disable': None, 'archive': 'archived'}, 'action_side_effects_file': 'side_effects.json'}
 
 class DomainService:
     doc_id = "bank_connection"
@@ -63,12 +65,28 @@ class DomainService:
     def after_update(self, instance, serialized_data: dict, context: dict | None = None) -> dict:
         return serialized_data
 
+    def after_action(
+        self,
+        instance,
+        action_id: str,
+        payload: dict,
+        action_result: dict,
+        context: dict | None = None,
+    ) -> dict:
+        return {
+            "updates": {},
+            "side_effects": [],
+        }
+
     def shape_retrieve_data(self, instance, serialized_data: dict, context: dict | None = None) -> dict:
         serialized_data.setdefault("_business_capabilities", self.business_capabilities())
         return serialized_data
 
     def workflow_objective(self) -> str | None:
         return WORKFLOW_HINTS.get("business_objective")
+
+    def side_effect_hints(self) -> dict:
+        return SIDE_EFFECT_HINTS
 
     def business_capabilities(self) -> dict:
         return {

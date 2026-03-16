@@ -23,7 +23,20 @@
       "show_in_related_panel": true
     }
   ],
-  "lookup_rules": [],
+  "lookup_rules": [
+    {
+      "field_id": "related_mobile_money_transaction",
+      "doc_id": "mobile_money_transaction",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    },
+    {
+      "field_id": "related_wallet_settlement",
+      "doc_id": "wallet_settlement",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    }
+  ],
   "fetch_rules": [],
   "reference_map": {
     "primary_reference_field": "reference_no",
@@ -31,7 +44,10 @@
   },
   "relation_rules": {
     "parent_doc": null,
-    "child_docs": [],
+    "child_docs": [
+      "mobile_money_transaction",
+      "wallet_settlement"
+    ],
     "show_related_panel": true
   },
   "borrowed_fields": [
@@ -55,6 +71,45 @@
   "runtime_hints": {
     "doc_key": "wallet_reversal_case",
     "supports_related_lookup": true,
-    "supports_fetch_rules": true
+    "supports_fetch_rules": true,
+    "workflow_hints": {
+      "relation_context": {
+        "related_docs": [
+          "mobile_money_transaction",
+          "wallet_settlement"
+        ],
+        "borrowed_fields": [
+          "transaction identity",
+          "status from mobile_money_transaction"
+        ],
+        "inferred_roles": [
+          "case owner"
+        ]
+      },
+      "actors": [
+        "case owner"
+      ],
+      "action_actors": {
+        "create": [
+          "case owner"
+        ],
+        "assign": [
+          "case owner"
+        ],
+        "reverse": [
+          "case owner"
+        ],
+        "reject": [
+          "case owner"
+        ],
+        "close": [
+          "case owner"
+        ],
+        "archive": [
+          "case owner"
+        ]
+      }
+    },
+    "action_side_effects_file": "side_effects.json"
   }
 }

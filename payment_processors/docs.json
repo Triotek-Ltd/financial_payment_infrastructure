@@ -1,8 +1,8 @@
 {
   "docs": [
-    "processor_event_log",
     "payment_intent_record",
     "processor_account",
+    "processor_event_log",
     "processor_payout"
   ]
 }

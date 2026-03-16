@@ -69,7 +69,11 @@
       "transaction_date": "transaction_date",
       "party": "primary_party",
       "currency": "currency_code",
-      "total_amount": "total_amount"
+      "total_amount": "total_amount",
+      "related_card_network_profile": "relation_collection",
+      "related_chargeback_case": "relation_collection",
+      "related_terminal_settlement": "relation_collection",
+      "related_payment_attempt": "relation_collection"
     },
     "search_fields": [
       "title",
@@ -111,7 +115,44 @@
       "archive": "archived"
     }
   },
-  "workflow_hints": {},
+  "workflow_hints": {
+    "relation_context": {
+      "related_docs": [
+        "card_network_profile",
+        "chargeback_case",
+        "terminal_settlement",
+        "payment_attempt"
+      ],
+      "borrowed_fields": [
+        "merchant",
+        "processor context from card_network_profile",
+        "checkout/payment context from payment_attempt"
+      ],
+      "inferred_roles": [
+        "approver",
+        "finance officer",
+        "case owner"
+      ]
+    },
+    "actors": [
+      "approver",
+      "finance officer",
+      "case owner"
+    ],
+    "action_actors": {
+      "create": [
+        "approver"
+      ],
+      "reverse": [
+        "case owner"
+      ],
+      "archive": [
+        "case owner"
+      ]
+    }
+  },
+  "downstream_effects": [],
+  "action_side_effects_file": "side_effects.json",
   "related_docs": [
     "card_network_profile",
     "chargeback_case",

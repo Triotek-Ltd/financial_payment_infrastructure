@@ -11,7 +11,7 @@ TERMINAL_STATES = ['reversed', 'archived']
 ACTION_RULES = {'create': {'allowed_in_states': ['initiated', 'pending', 'successful', 'failed', 'settled'], 'transitions_to': None}, 'submit': {'allowed_in_states': ['initiated', 'pending', 'successful', 'failed', 'settled'], 'transitions_to': None}, 'confirm': {'allowed_in_states': ['initiated', 'pending', 'successful', 'failed', 'settled'], 'transitions_to': None}, 'reverse': {'allowed_in_states': ['initiated', 'pending', 'successful', 'failed', 'settled'], 'transitions_to': 'reversed'}, 'settle': {'allowed_in_states': ['initiated', 'pending', 'successful', 'failed', 'settled'], 'transitions_to': None}, 'archive': {'allowed_in_states': ['initiated', 'pending', 'successful', 'failed', 'settled'], 'transitions_to': 'archived'}}
 
 STATE_FIELD = 'workflow_state'
-WORKFLOW_HINTS = {}
+WORKFLOW_HINTS = {'relation_context': {'related_docs': ['wallet_provider_profile', 'wallet_reversal_case', 'wallet_settlement', 'payment_attempt'], 'borrowed_fields': ['provider context from wallet_provider_profile', 'checkout/payment context from linked commerce records'], 'inferred_roles': ['finance officer', 'case owner']}, 'actors': ['finance officer', 'case owner'], 'action_actors': {'create': ['finance officer'], 'submit': ['finance officer'], 'confirm': ['case owner'], 'reverse': ['case owner'], 'archive': ['case owner']}}
 
 class WorkflowService:
     def allowed_actions_for_state(self, state: str | None) -> list[str]:

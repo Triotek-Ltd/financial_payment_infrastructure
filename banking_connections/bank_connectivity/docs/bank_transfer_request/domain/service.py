@@ -5,9 +5,11 @@ from __future__ import annotations
 
 ARCHETYPE_PROFILE = {'workflow_profile': {'mode': 'case_flow', 'supports_assignment': True, 'supports_escalation': True}, 'reporting_profile': {'supports_snapshots': True, 'supports_outputs': False}, 'integration_profile': {'external_sync_enabled': False}, 'lifecycle_states': ['draft', 'approved', 'submitted', 'completed', 'failed', 'reversed', 'archived'], 'is_transactional': False}
 
-CONTRACT = {'title_field': 'title', 'status_field': 'workflow_state', 'reference_field': 'reference_no', 'required_fields': ['title', 'workflow_state'], 'field_purposes': {'workflow_state': 'lifecycle_state'}, 'search_fields': ['title', 'reference_no', 'description', 'request_code', 'source_connection', 'source_account'], 'list_columns': ['title', 'reference_no', 'workflow_state', 'modified'], 'initial_state': 'draft', 'lifecycle_states': ['draft', 'approved', 'submitted', 'completed', 'failed', 'reversed', 'archived'], 'terminal_states': ['reversed', 'archived'], 'action_targets': {'create': None, 'submit': 'submitted', 'review': None, 'approve': 'approved', 'release': None, 'cancel': None, 'close': None, 'archive': 'archived'}}
+CONTRACT = {'title_field': 'title', 'status_field': 'workflow_state', 'reference_field': 'reference_no', 'required_fields': ['title', 'workflow_state'], 'field_purposes': {'workflow_state': 'lifecycle_state', 'related_bank_connection': 'relation_collection', 'related_settlement_record': 'relation_collection', 'related_supplier_payment': 'relation_collection', 'related_treasury_movement': 'relation_collection'}, 'search_fields': ['title', 'reference_no', 'description', 'request_code', 'source_connection', 'source_account'], 'list_columns': ['title', 'reference_no', 'workflow_state', 'modified'], 'initial_state': 'draft', 'lifecycle_states': ['draft', 'approved', 'submitted', 'completed', 'failed', 'reversed', 'archived'], 'terminal_states': ['reversed', 'archived'], 'action_targets': {'create': None, 'submit': 'submitted', 'review': None, 'approve': 'approved', 'release': None, 'cancel': None, 'close': None, 'archive': 'archived'}}
 
-WORKFLOW_HINTS = {}
+WORKFLOW_HINTS = {'relation_context': {'related_docs': ['bank_connection', 'settlement_record', 'supplier_payment', 'treasury_movement'], 'borrowed_fields': ['source account', 'institution from bank_connection'], 'inferred_roles': ['procurement officer', 'finance officer']}, 'actors': ['procurement officer', 'finance officer'], 'action_actors': {'create': ['procurement officer'], 'submit': ['procurement officer'], 'review': ['finance officer'], 'approve': ['finance officer'], 'cancel': ['procurement officer'], 'close': ['procurement officer'], 'archive': ['procurement officer']}}
+
+SIDE_EFFECT_HINTS = {'downstream_effects': [], 'related_docs': ['bank_connection', 'settlement_record', 'supplier_payment', 'treasury_movement'], 'action_targets': {'create': None, 'submit': 'submitted', 'review': None, 'approve': 'approved', 'release': None, 'cancel': None, 'close': None, 'archive': 'archived'}, 'action_side_effects_file': 'side_effects.json'}
 
 class DomainService:
     doc_id = "bank_transfer_request"
@@ -63,12 +65,28 @@ class DomainService:
     def after_update(self, instance, serialized_data: dict, context: dict | None = None) -> dict:
         return serialized_data
 
+    def after_action(
+        self,
+        instance,
+        action_id: str,
+        payload: dict,
+        action_result: dict,
+        context: dict | None = None,
+    ) -> dict:
+        return {
+            "updates": {},
+            "side_effects": [],
+        }
+
     def shape_retrieve_data(self, instance, serialized_data: dict, context: dict | None = None) -> dict:
         serialized_data.setdefault("_business_capabilities", self.business_capabilities())
         return serialized_data
 
     def workflow_objective(self) -> str | None:
         return WORKFLOW_HINTS.get("business_objective")
+
+    def side_effect_hints(self) -> dict:
+        return SIDE_EFFECT_HINTS
 
     def business_capabilities(self) -> dict:
         return {

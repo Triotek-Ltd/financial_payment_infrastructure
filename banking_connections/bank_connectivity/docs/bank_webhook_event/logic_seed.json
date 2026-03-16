@@ -57,7 +57,10 @@
     "field_purposes": {
       "workflow_state": "lifecycle_state",
       "posting_date": "posting_date",
-      "normalized_status": "status_flag"
+      "normalized_status": "status_flag",
+      "related_bank_connection": "relation_collection",
+      "related_bank_transfer_request": "relation_collection",
+      "related_settlement_record": "relation_collection"
     },
     "search_fields": [
       "title",
@@ -90,7 +93,34 @@
       "archive": "archived"
     }
   },
-  "workflow_hints": {},
+  "workflow_hints": {
+    "relation_context": {
+      "related_docs": [
+        "bank_connection",
+        "bank_transfer_request",
+        "settlement_record"
+      ],
+      "borrowed_fields": [
+        "provider/account identity from bank_connection"
+      ],
+      "inferred_roles": [
+        "finance officer"
+      ]
+    },
+    "actors": [
+      "finance officer"
+    ],
+    "action_actors": {
+      "record": [
+        "finance officer"
+      ],
+      "archive": [
+        "finance officer"
+      ]
+    }
+  },
+  "downstream_effects": [],
+  "action_side_effects_file": "side_effects.json",
   "related_docs": [
     "bank_connection",
     "bank_transfer_request",

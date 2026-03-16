@@ -11,7 +11,7 @@ TERMINAL_STATES = ['archived']
 ACTION_RULES = {'create': {'allowed_in_states': ['draft', 'verified', 'active'], 'transitions_to': None}, 'verify': {'allowed_in_states': ['draft', 'verified', 'active'], 'transitions_to': None}, 'activate': {'allowed_in_states': ['draft'], 'transitions_to': 'active'}, 'disable': {'allowed_in_states': ['draft', 'verified', 'active'], 'transitions_to': None}, 'archive': {'allowed_in_states': ['draft', 'verified', 'active'], 'transitions_to': 'archived'}}
 
 STATE_FIELD = 'workflow_state'
-WORKFLOW_HINTS = {}
+WORKFLOW_HINTS = {'relation_context': {'related_docs': ['card_authorization_record', 'chargeback_case', 'terminal_settlement', 'payment_log_entry'], 'borrowed_fields': ['merchant context from commerce/payment config where linked'], 'inferred_roles': ['approver', 'finance officer', 'case owner']}, 'actors': ['approver', 'finance officer', 'case owner'], 'action_actors': {'create': ['approver'], 'verify': ['finance officer'], 'activate': ['case owner'], 'archive': ['case owner']}}
 
 class WorkflowService:
     def allowed_actions_for_state(self, state: str | None) -> list[str]:

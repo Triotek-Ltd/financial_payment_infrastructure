@@ -8,7 +8,7 @@ ACTION_ID = "reconcile"
 ACTION_RULE = {'allowed_in_states': ['open', 'settled', 'reconciled'], 'transitions_to': None}
 
 STATE_FIELD = 'workflow_state'
-WORKFLOW_HINTS = {}
+WORKFLOW_HINTS = {'relation_context': {'related_docs': ['card_authorization_record', 'card_network_profile', 'settlement_record'], 'borrowed_fields': ['merchant/terminal context from card_network_profile'], 'inferred_roles': ['approver', 'finance officer']}, 'actors': ['approver', 'finance officer'], 'action_actors': {'record': ['approver'], 'review': ['finance officer'], 'reconcile': ['finance officer'], 'archive': ['approver']}}
 
 def handle_reconcile(payload: dict, context: dict | None = None) -> dict:
     context = context or {}

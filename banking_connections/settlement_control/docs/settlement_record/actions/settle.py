@@ -8,7 +8,7 @@ ACTION_ID = "settle"
 ACTION_RULE = {'allowed_in_states': ['pending', 'settled', 'reconciled'], 'transitions_to': None}
 
 STATE_FIELD = 'workflow_state'
-WORKFLOW_HINTS = {}
+WORKFLOW_HINTS = {'relation_context': {'related_docs': ['bank_connection', 'bank_transfer_request', 'treasury_movement', 'cash_position_snapshot'], 'borrowed_fields': ['source account', 'institution from bank_connection'], 'inferred_roles': ['finance officer']}, 'actors': ['finance officer'], 'action_actors': {'create': ['finance officer'], 'review': ['finance officer'], 'reconcile': ['finance officer'], 'archive': ['finance officer']}}
 
 def handle_settle(payload: dict, context: dict | None = None) -> dict:
     context = context or {}

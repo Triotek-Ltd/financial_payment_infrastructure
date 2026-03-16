@@ -11,7 +11,7 @@ TERMINAL_STATES = ['archived']
 ACTION_RULES = {'create': {'allowed_in_states': ['created', 'requires_action', 'processing', 'succeeded', 'failed', 'cancelled'], 'transitions_to': None}, 'confirm': {'allowed_in_states': ['created', 'requires_action', 'processing', 'succeeded', 'failed', 'cancelled'], 'transitions_to': None}, 'cancel': {'allowed_in_states': ['created', 'requires_action', 'processing', 'succeeded', 'failed', 'cancelled'], 'transitions_to': None}, 'succeed': {'allowed_in_states': ['created', 'requires_action', 'processing', 'succeeded', 'failed', 'cancelled'], 'transitions_to': None}, 'fail': {'allowed_in_states': ['created', 'requires_action', 'processing', 'succeeded', 'failed', 'cancelled'], 'transitions_to': None}, 'archive': {'allowed_in_states': ['created', 'requires_action', 'processing', 'succeeded', 'failed', 'cancelled'], 'transitions_to': 'archived'}}
 
 STATE_FIELD = 'workflow_state'
-WORKFLOW_HINTS = {}
+WORKFLOW_HINTS = {'relation_context': {'related_docs': ['processor_account', 'processor_event_log', 'processor_payout', 'payment_attempt'], 'borrowed_fields': ['account context from processor_account', 'checkout/payment context from payment_attempt'], 'inferred_roles': ['finance officer']}, 'actors': ['finance officer'], 'action_actors': {'create': ['finance officer'], 'confirm': ['finance officer'], 'cancel': ['finance officer'], 'archive': ['finance officer']}}
 
 class WorkflowService:
     def allowed_actions_for_state(self, state: str | None) -> list[str]:

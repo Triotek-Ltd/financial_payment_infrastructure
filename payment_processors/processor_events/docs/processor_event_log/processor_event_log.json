@@ -60,7 +60,9 @@
         "processing_state"
       ],
       "relations": [
-        "processor_account"
+        "processor_account",
+        "related_payment_intent_record",
+        "related_processor_payout"
       ],
       "amounts": [],
       "dates": [
@@ -368,6 +370,54 @@
           "filterable": true,
           "sortable": true
         }
+      },
+      {
+        "field_id": "related_payment_intent_record",
+        "label": "Related Payment Intent Record",
+        "type": "Table MultiSelect",
+        "required": false,
+        "read_only": false,
+        "default": null,
+        "unique": false,
+        "options": null,
+        "purpose": "relation_collection",
+        "linked_doc": "payment_intent_record",
+        "depends_on": null,
+        "mandatory_depends_on": null,
+        "read_only_depends_on": null,
+        "fetch_from": null,
+        "allow_on_submit": false,
+        "indexed": false,
+        "ui": {
+          "visible": false,
+          "list_visible": false,
+          "filterable": false,
+          "sortable": false
+        }
+      },
+      {
+        "field_id": "related_processor_payout",
+        "label": "Related Processor Payout",
+        "type": "Table MultiSelect",
+        "required": false,
+        "read_only": false,
+        "default": null,
+        "unique": false,
+        "options": null,
+        "purpose": "relation_collection",
+        "linked_doc": "processor_payout",
+        "depends_on": null,
+        "mandatory_depends_on": null,
+        "read_only_depends_on": null,
+        "fetch_from": null,
+        "allow_on_submit": false,
+        "indexed": false,
+        "ui": {
+          "visible": false,
+          "list_visible": false,
+          "filterable": false,
+          "sortable": false
+        }
       }
     ],
     "title_field": "title",
@@ -462,16 +512,21 @@
       {
         "role_id": "System Manager",
         "actions": [
-          "create",
-          "update",
           "view",
           "list",
           "record",
-          "review",
-          "assign",
-          "track",
-          "monitor",
-          "confirm",
+          "normalize",
+          "apply",
+          "ignore",
+          "archive"
+        ]
+      },
+      {
+        "role_id": "finance officer",
+        "actions": [
+          "view",
+          "list",
+          "record",
           "archive"
         ]
       }
@@ -550,7 +605,20 @@
         "show_in_related_panel": true
       }
     ],
-    "lookup_rules": [],
+    "lookup_rules": [
+      {
+        "field_id": "related_payment_intent_record",
+        "doc_id": "payment_intent_record",
+        "lookup_mode": "multiple",
+        "purpose": "relation_collection"
+      },
+      {
+        "field_id": "related_processor_payout",
+        "doc_id": "processor_payout",
+        "lookup_mode": "multiple",
+        "purpose": "relation_collection"
+      }
+    ],
     "fetch_rules": [],
     "reference_map": {
       "primary_reference_field": "reference_no",
@@ -558,7 +626,10 @@
     },
     "relation_rules": {
       "parent_doc": null,
-      "child_docs": [],
+      "child_docs": [
+        "payment_intent_record",
+        "processor_payout"
+      ],
       "show_related_panel": true
     },
     "borrowed_fields": [
@@ -579,7 +650,34 @@
     "runtime_hints": {
       "doc_key": "processor_event_log",
       "supports_related_lookup": true,
-      "supports_fetch_rules": true
+      "supports_fetch_rules": true,
+      "workflow_hints": {
+        "relation_context": {
+          "related_docs": [
+            "processor_account",
+            "payment_intent_record",
+            "processor_payout"
+          ],
+          "borrowed_fields": [
+            "provider/account identity from processor_account"
+          ],
+          "inferred_roles": [
+            "finance officer"
+          ]
+        },
+        "actors": [
+          "finance officer"
+        ],
+        "action_actors": {
+          "record": [
+            "finance officer"
+          ],
+          "archive": [
+            "finance officer"
+          ]
+        }
+      },
+      "action_side_effects_file": "side_effects.json"
     }
   },
   "classification": {
@@ -655,6 +753,9 @@
       "reports": "reports/service.py",
       "integrations": "integrations/service.py"
     },
+    "runtime_contract": {
+      "side_effects_file": "side_effects.json"
+    },
     "action_handlers": {
       "base_dir": "actions",
       "registry": "actions/registry.py",
@@ -672,6 +773,32 @@
       "doc_kind": "ledger"
     }
   },
+  "testing": {
+    "seeded": true,
+    "api_base_path": "/apis/financial_payment_infrastructure/payment_processors/processor_events/processor_event_log/",
+    "status_field": "workflow_state",
+    "initial_state": "received",
+    "required_fields": [
+      "title",
+      "workflow_state",
+      "posting_date"
+    ],
+    "transition_scenarios": [
+      {
+        "action_id": "archive",
+        "source_state": "received",
+        "target_state": "archived",
+        "disallowed_state": "archived"
+      }
+    ],
+    "related_docs": [
+      "processor_account",
+      "payment_intent_record",
+      "processor_payout"
+    ],
+    "downstream_effects": [],
+    "action_side_effects_file": "side_effects.json"
+  },
   "runtime": {
     "source_of_truth": "doc_folder",
     "generated_from": [
@@ -679,7 +806,8 @@
       "schema.json",
       "actions.json",
       "settings.json",
-      "logic_seed.json"
+      "logic_seed.json",
+      "side_effects.json"
     ],
     "generator": "plug.apps.doc.file_handler"
   }

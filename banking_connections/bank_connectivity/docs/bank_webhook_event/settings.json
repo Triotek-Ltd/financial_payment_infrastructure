@@ -28,7 +28,26 @@
       "show_in_related_panel": true
     }
   ],
-  "lookup_rules": [],
+  "lookup_rules": [
+    {
+      "field_id": "related_bank_connection",
+      "doc_id": "bank_connection",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    },
+    {
+      "field_id": "related_bank_transfer_request",
+      "doc_id": "bank_transfer_request",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    },
+    {
+      "field_id": "related_settlement_record",
+      "doc_id": "settlement_record",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    }
+  ],
   "fetch_rules": [],
   "reference_map": {
     "primary_reference_field": "reference_no",
@@ -36,7 +55,11 @@
   },
   "relation_rules": {
     "parent_doc": null,
-    "child_docs": [],
+    "child_docs": [
+      "bank_connection",
+      "bank_transfer_request",
+      "settlement_record"
+    ],
     "show_related_panel": true
   },
   "borrowed_fields": [
@@ -57,6 +80,33 @@
   "runtime_hints": {
     "doc_key": "bank_webhook_event",
     "supports_related_lookup": true,
-    "supports_fetch_rules": true
+    "supports_fetch_rules": true,
+    "workflow_hints": {
+      "relation_context": {
+        "related_docs": [
+          "bank_connection",
+          "bank_transfer_request",
+          "settlement_record"
+        ],
+        "borrowed_fields": [
+          "provider/account identity from bank_connection"
+        ],
+        "inferred_roles": [
+          "finance officer"
+        ]
+      },
+      "actors": [
+        "finance officer"
+      ],
+      "action_actors": {
+        "record": [
+          "finance officer"
+        ],
+        "archive": [
+          "finance officer"
+        ]
+      }
+    },
+    "action_side_effects_file": "side_effects.json"
   }
 }

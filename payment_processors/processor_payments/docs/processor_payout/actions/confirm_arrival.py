@@ -8,7 +8,7 @@ ACTION_ID = "confirm_arrival"
 ACTION_RULE = {'allowed_in_states': ['pending', 'in_transit', 'failed', 'reconciled'], 'transitions_to': None}
 
 STATE_FIELD = 'workflow_state'
-WORKFLOW_HINTS = {}
+WORKFLOW_HINTS = {'relation_context': {'related_docs': ['processor_account', 'payment_intent_record', 'settlement_record', 'cash_position_snapshot'], 'borrowed_fields': ['processor identity from processor_account'], 'inferred_roles': ['finance officer']}, 'actors': ['finance officer'], 'action_actors': {'create': ['finance officer'], 'review': ['finance officer'], 'reconcile': ['finance officer'], 'archive': ['finance officer']}}
 
 def handle_confirm_arrival(payload: dict, context: dict | None = None) -> dict:
     context = context or {}

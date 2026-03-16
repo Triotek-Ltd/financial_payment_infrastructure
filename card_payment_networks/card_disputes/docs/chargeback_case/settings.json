@@ -28,7 +28,26 @@
       "show_in_related_panel": true
     }
   ],
-  "lookup_rules": [],
+  "lookup_rules": [
+    {
+      "field_id": "related_card_authorization_record",
+      "doc_id": "card_authorization_record",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    },
+    {
+      "field_id": "related_refund_case",
+      "doc_id": "refund_case",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    },
+    {
+      "field_id": "related_payment_log_entry",
+      "doc_id": "payment_log_entry",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    }
+  ],
   "fetch_rules": [],
   "reference_map": {
     "primary_reference_field": "reference_no",
@@ -36,7 +55,11 @@
   },
   "relation_rules": {
     "parent_doc": null,
-    "child_docs": [],
+    "child_docs": [
+      "card_authorization_record",
+      "refund_case",
+      "payment_log_entry"
+    ],
     "show_related_panel": true
   },
   "borrowed_fields": [
@@ -60,6 +83,44 @@
   "runtime_hints": {
     "doc_key": "chargeback_case",
     "supports_related_lookup": true,
-    "supports_fetch_rules": true
+    "supports_fetch_rules": true,
+    "workflow_hints": {
+      "relation_context": {
+        "related_docs": [
+          "card_authorization_record",
+          "refund_case",
+          "payment_log_entry"
+        ],
+        "borrowed_fields": [
+          "authorization",
+          "transaction context from card_authorization_record"
+        ],
+        "inferred_roles": [
+          "approver",
+          "finance officer",
+          "case owner"
+        ]
+      },
+      "actors": [
+        "approver",
+        "finance officer",
+        "case owner"
+      ],
+      "action_actors": {
+        "create": [
+          "approver"
+        ],
+        "assign": [
+          "approver"
+        ],
+        "close": [
+          "case owner"
+        ],
+        "archive": [
+          "case owner"
+        ]
+      }
+    },
+    "action_side_effects_file": "side_effects.json"
   }
 }

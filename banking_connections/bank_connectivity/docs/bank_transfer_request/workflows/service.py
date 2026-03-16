@@ -11,7 +11,7 @@ TERMINAL_STATES = ['reversed', 'archived']
 ACTION_RULES = {'create': {'allowed_in_states': ['draft', 'approved', 'submitted', 'completed', 'failed'], 'transitions_to': None}, 'submit': {'allowed_in_states': ['draft', 'approved', 'submitted', 'completed', 'failed'], 'transitions_to': 'submitted'}, 'review': {'allowed_in_states': ['draft', 'approved', 'submitted', 'completed', 'failed'], 'transitions_to': None}, 'approve': {'allowed_in_states': ['draft', 'approved', 'submitted', 'completed', 'failed'], 'transitions_to': 'approved'}, 'release': {'allowed_in_states': ['draft', 'approved', 'submitted', 'completed', 'failed'], 'transitions_to': None}, 'cancel': {'allowed_in_states': ['draft', 'approved', 'submitted', 'completed', 'failed'], 'transitions_to': None}, 'close': {'allowed_in_states': ['draft', 'approved', 'submitted', 'completed', 'failed'], 'transitions_to': None}, 'archive': {'allowed_in_states': ['draft', 'approved', 'submitted', 'completed', 'failed'], 'transitions_to': 'archived'}}
 
 STATE_FIELD = 'workflow_state'
-WORKFLOW_HINTS = {}
+WORKFLOW_HINTS = {'relation_context': {'related_docs': ['bank_connection', 'settlement_record', 'supplier_payment', 'treasury_movement'], 'borrowed_fields': ['source account', 'institution from bank_connection'], 'inferred_roles': ['procurement officer', 'finance officer']}, 'actors': ['procurement officer', 'finance officer'], 'action_actors': {'create': ['procurement officer'], 'submit': ['procurement officer'], 'review': ['finance officer'], 'approve': ['finance officer'], 'cancel': ['procurement officer'], 'close': ['procurement officer'], 'archive': ['procurement officer']}}
 
 class WorkflowService:
     def allowed_actions_for_state(self, state: str | None) -> list[str]:

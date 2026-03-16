@@ -69,7 +69,11 @@
       "party": "primary_party",
       "currency": "currency_code",
       "total_amount": "total_amount",
-      "provider_status": "status_flag"
+      "provider_status": "status_flag",
+      "related_wallet_provider_profile": "relation_collection",
+      "related_wallet_reversal_case": "relation_collection",
+      "related_wallet_settlement": "relation_collection",
+      "related_payment_attempt": "relation_collection"
     },
     "search_fields": [
       "title",
@@ -110,7 +114,47 @@
       "archive": "archived"
     }
   },
-  "workflow_hints": {},
+  "workflow_hints": {
+    "relation_context": {
+      "related_docs": [
+        "wallet_provider_profile",
+        "wallet_reversal_case",
+        "wallet_settlement",
+        "payment_attempt"
+      ],
+      "borrowed_fields": [
+        "provider context from wallet_provider_profile",
+        "checkout/payment context from linked commerce records"
+      ],
+      "inferred_roles": [
+        "finance officer",
+        "case owner"
+      ]
+    },
+    "actors": [
+      "finance officer",
+      "case owner"
+    ],
+    "action_actors": {
+      "create": [
+        "finance officer"
+      ],
+      "submit": [
+        "finance officer"
+      ],
+      "confirm": [
+        "case owner"
+      ],
+      "reverse": [
+        "case owner"
+      ],
+      "archive": [
+        "case owner"
+      ]
+    }
+  },
+  "downstream_effects": [],
+  "action_side_effects_file": "side_effects.json",
   "related_docs": [
     "wallet_provider_profile",
     "wallet_reversal_case",

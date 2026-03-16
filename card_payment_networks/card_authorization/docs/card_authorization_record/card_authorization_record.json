@@ -72,7 +72,12 @@
         "capture_state",
         "settlement_reference"
       ],
-      "relations": [],
+      "relations": [
+        "related_card_network_profile",
+        "related_chargeback_case",
+        "related_terminal_settlement",
+        "related_payment_attempt"
+      ],
       "amounts": [
         "currency",
         "total_amount"
@@ -433,6 +438,102 @@
           "filterable": true,
           "sortable": true
         }
+      },
+      {
+        "field_id": "related_card_network_profile",
+        "label": "Related Card Network Profile",
+        "type": "Table MultiSelect",
+        "required": false,
+        "read_only": false,
+        "default": null,
+        "unique": false,
+        "options": null,
+        "purpose": "relation_collection",
+        "linked_doc": "card_network_profile",
+        "depends_on": null,
+        "mandatory_depends_on": null,
+        "read_only_depends_on": null,
+        "fetch_from": null,
+        "allow_on_submit": false,
+        "indexed": false,
+        "ui": {
+          "visible": false,
+          "list_visible": false,
+          "filterable": false,
+          "sortable": false
+        }
+      },
+      {
+        "field_id": "related_chargeback_case",
+        "label": "Related Chargeback Case",
+        "type": "Table MultiSelect",
+        "required": false,
+        "read_only": false,
+        "default": null,
+        "unique": false,
+        "options": null,
+        "purpose": "relation_collection",
+        "linked_doc": "chargeback_case",
+        "depends_on": null,
+        "mandatory_depends_on": null,
+        "read_only_depends_on": null,
+        "fetch_from": null,
+        "allow_on_submit": false,
+        "indexed": false,
+        "ui": {
+          "visible": false,
+          "list_visible": false,
+          "filterable": false,
+          "sortable": false
+        }
+      },
+      {
+        "field_id": "related_terminal_settlement",
+        "label": "Related Terminal Settlement",
+        "type": "Table MultiSelect",
+        "required": false,
+        "read_only": false,
+        "default": null,
+        "unique": false,
+        "options": null,
+        "purpose": "relation_collection",
+        "linked_doc": "terminal_settlement",
+        "depends_on": null,
+        "mandatory_depends_on": null,
+        "read_only_depends_on": null,
+        "fetch_from": null,
+        "allow_on_submit": false,
+        "indexed": false,
+        "ui": {
+          "visible": false,
+          "list_visible": false,
+          "filterable": false,
+          "sortable": false
+        }
+      },
+      {
+        "field_id": "related_payment_attempt",
+        "label": "Related Payment Attempt",
+        "type": "Table MultiSelect",
+        "required": false,
+        "read_only": false,
+        "default": null,
+        "unique": false,
+        "options": null,
+        "purpose": "relation_collection",
+        "linked_doc": "payment_attempt",
+        "depends_on": null,
+        "mandatory_depends_on": null,
+        "read_only_depends_on": null,
+        "fetch_from": null,
+        "allow_on_submit": false,
+        "indexed": false,
+        "ui": {
+          "visible": false,
+          "list_visible": false,
+          "filterable": false,
+          "sortable": false
+        }
       }
     ],
     "title_field": "title",
@@ -555,16 +656,38 @@
       {
         "role_id": "System Manager",
         "actions": [
-          "create",
-          "update",
           "view",
           "list",
-          "record",
-          "review",
-          "assign",
-          "track",
-          "monitor",
-          "confirm",
+          "create",
+          "authorize",
+          "capture",
+          "void",
+          "settle",
+          "reverse",
+          "archive"
+        ]
+      },
+      {
+        "role_id": "approver",
+        "actions": [
+          "view",
+          "list",
+          "create"
+        ]
+      },
+      {
+        "role_id": "finance officer",
+        "actions": [
+          "view",
+          "list"
+        ]
+      },
+      {
+        "role_id": "case owner",
+        "actions": [
+          "view",
+          "list",
+          "reverse",
           "archive"
         ]
       }
@@ -654,7 +777,32 @@
         "show_in_related_panel": true
       }
     ],
-    "lookup_rules": [],
+    "lookup_rules": [
+      {
+        "field_id": "related_card_network_profile",
+        "doc_id": "card_network_profile",
+        "lookup_mode": "multiple",
+        "purpose": "relation_collection"
+      },
+      {
+        "field_id": "related_chargeback_case",
+        "doc_id": "chargeback_case",
+        "lookup_mode": "multiple",
+        "purpose": "relation_collection"
+      },
+      {
+        "field_id": "related_terminal_settlement",
+        "doc_id": "terminal_settlement",
+        "lookup_mode": "multiple",
+        "purpose": "relation_collection"
+      },
+      {
+        "field_id": "related_payment_attempt",
+        "doc_id": "payment_attempt",
+        "lookup_mode": "multiple",
+        "purpose": "relation_collection"
+      }
+    ],
     "fetch_rules": [],
     "reference_map": {
       "primary_reference_field": "reference_no",
@@ -662,7 +810,12 @@
     },
     "relation_rules": {
       "parent_doc": null,
-      "child_docs": [],
+      "child_docs": [
+        "card_network_profile",
+        "chargeback_case",
+        "terminal_settlement",
+        "payment_attempt"
+      ],
       "show_related_panel": true
     },
     "borrowed_fields": [
@@ -689,7 +842,44 @@
     "runtime_hints": {
       "doc_key": "card_authorization_record",
       "supports_related_lookup": true,
-      "supports_fetch_rules": true
+      "supports_fetch_rules": true,
+      "workflow_hints": {
+        "relation_context": {
+          "related_docs": [
+            "card_network_profile",
+            "chargeback_case",
+            "terminal_settlement",
+            "payment_attempt"
+          ],
+          "borrowed_fields": [
+            "merchant",
+            "processor context from card_network_profile",
+            "checkout/payment context from payment_attempt"
+          ],
+          "inferred_roles": [
+            "approver",
+            "finance officer",
+            "case owner"
+          ]
+        },
+        "actors": [
+          "approver",
+          "finance officer",
+          "case owner"
+        ],
+        "action_actors": {
+          "create": [
+            "approver"
+          ],
+          "reverse": [
+            "case owner"
+          ],
+          "archive": [
+            "case owner"
+          ]
+        }
+      },
+      "action_side_effects_file": "side_effects.json"
     }
   },
   "classification": {
@@ -769,6 +959,9 @@
       "reports": "reports/service.py",
       "integrations": "integrations/service.py"
     },
+    "runtime_contract": {
+      "side_effects_file": "side_effects.json"
+    },
     "action_handlers": {
       "base_dir": "actions",
       "registry": "actions/registry.py",
@@ -788,6 +981,39 @@
       "doc_kind": "transaction"
     }
   },
+  "testing": {
+    "seeded": true,
+    "api_base_path": "/apis/financial_payment_infrastructure/card_payment_networks/card_authorization/card_authorization_record/",
+    "status_field": "workflow_state",
+    "initial_state": "initiated",
+    "required_fields": [
+      "title",
+      "workflow_state",
+      "transaction_date"
+    ],
+    "transition_scenarios": [
+      {
+        "action_id": "reverse",
+        "source_state": "initiated",
+        "target_state": "reversed",
+        "disallowed_state": "reversed"
+      },
+      {
+        "action_id": "archive",
+        "source_state": "initiated",
+        "target_state": "archived",
+        "disallowed_state": "reversed"
+      }
+    ],
+    "related_docs": [
+      "card_network_profile",
+      "chargeback_case",
+      "terminal_settlement",
+      "payment_attempt"
+    ],
+    "downstream_effects": [],
+    "action_side_effects_file": "side_effects.json"
+  },
   "runtime": {
     "source_of_truth": "doc_folder",
     "generated_from": [
@@ -795,7 +1021,8 @@
       "schema.json",
       "actions.json",
       "settings.json",
-      "logic_seed.json"
+      "logic_seed.json",
+      "side_effects.json"
     ],
     "generator": "plug.apps.doc.file_handler"
   }

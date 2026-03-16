@@ -11,7 +11,7 @@ TERMINAL_STATES = ['archived']
 ACTION_RULES = {'create': {'allowed_in_states': ['pending', 'settled', 'reconciled'], 'transitions_to': None}, 'review': {'allowed_in_states': ['pending', 'settled', 'reconciled'], 'transitions_to': None}, 'settle': {'allowed_in_states': ['pending', 'settled', 'reconciled'], 'transitions_to': None}, 'reconcile': {'allowed_in_states': ['pending', 'settled', 'reconciled'], 'transitions_to': None}, 'archive': {'allowed_in_states': ['pending', 'settled', 'reconciled'], 'transitions_to': 'archived'}}
 
 STATE_FIELD = 'workflow_state'
-WORKFLOW_HINTS = {}
+WORKFLOW_HINTS = {'relation_context': {'related_docs': ['bank_connection', 'bank_transfer_request', 'treasury_movement', 'cash_position_snapshot'], 'borrowed_fields': ['source account', 'institution from bank_connection'], 'inferred_roles': ['finance officer']}, 'actors': ['finance officer'], 'action_actors': {'create': ['finance officer'], 'review': ['finance officer'], 'reconcile': ['finance officer'], 'archive': ['finance officer']}}
 
 class WorkflowService:
     def allowed_actions_for_state(self, state: str | None) -> list[str]:

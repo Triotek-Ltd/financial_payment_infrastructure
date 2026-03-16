@@ -63,7 +63,10 @@
       "workflow_state"
     ],
     "field_purposes": {
-      "workflow_state": "lifecycle_state"
+      "workflow_state": "lifecycle_state",
+      "related_card_authorization_record": "relation_collection",
+      "related_refund_case": "relation_collection",
+      "related_payment_log_entry": "relation_collection"
     },
     "search_fields": [
       "title",
@@ -102,7 +105,45 @@
       "archive": "archived"
     }
   },
-  "workflow_hints": {},
+  "workflow_hints": {
+    "relation_context": {
+      "related_docs": [
+        "card_authorization_record",
+        "refund_case",
+        "payment_log_entry"
+      ],
+      "borrowed_fields": [
+        "authorization",
+        "transaction context from card_authorization_record"
+      ],
+      "inferred_roles": [
+        "approver",
+        "finance officer",
+        "case owner"
+      ]
+    },
+    "actors": [
+      "approver",
+      "finance officer",
+      "case owner"
+    ],
+    "action_actors": {
+      "create": [
+        "approver"
+      ],
+      "assign": [
+        "approver"
+      ],
+      "close": [
+        "case owner"
+      ],
+      "archive": [
+        "case owner"
+      ]
+    }
+  },
+  "downstream_effects": [],
+  "action_side_effects_file": "side_effects.json",
   "related_docs": [
     "card_authorization_record",
     "refund_case",

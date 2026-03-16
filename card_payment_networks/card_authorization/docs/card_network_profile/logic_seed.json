@@ -55,7 +55,11 @@
     ],
     "field_purposes": {
       "workflow_state": "lifecycle_state",
-      "active_status": "status_flag"
+      "active_status": "status_flag",
+      "related_card_authorization_record": "relation_collection",
+      "related_chargeback_case": "relation_collection",
+      "related_terminal_settlement": "relation_collection",
+      "related_payment_log_entry": "relation_collection"
     },
     "search_fields": [
       "title",
@@ -89,7 +93,45 @@
       "archive": "archived"
     }
   },
-  "workflow_hints": {},
+  "workflow_hints": {
+    "relation_context": {
+      "related_docs": [
+        "card_authorization_record",
+        "chargeback_case",
+        "terminal_settlement",
+        "payment_log_entry"
+      ],
+      "borrowed_fields": [
+        "merchant context from commerce/payment config where linked"
+      ],
+      "inferred_roles": [
+        "approver",
+        "finance officer",
+        "case owner"
+      ]
+    },
+    "actors": [
+      "approver",
+      "finance officer",
+      "case owner"
+    ],
+    "action_actors": {
+      "create": [
+        "approver"
+      ],
+      "verify": [
+        "finance officer"
+      ],
+      "activate": [
+        "case owner"
+      ],
+      "archive": [
+        "case owner"
+      ]
+    }
+  },
+  "downstream_effects": [],
+  "action_side_effects_file": "side_effects.json",
   "related_docs": [
     "card_authorization_record",
     "chargeback_case",

@@ -28,7 +28,26 @@
       "show_in_related_panel": true
     }
   ],
-  "lookup_rules": [],
+  "lookup_rules": [
+    {
+      "field_id": "related_wallet_provider_profile",
+      "doc_id": "wallet_provider_profile",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    },
+    {
+      "field_id": "related_mobile_money_transaction",
+      "doc_id": "mobile_money_transaction",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    },
+    {
+      "field_id": "related_cash_position_snapshot",
+      "doc_id": "cash_position_snapshot",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    }
+  ],
   "fetch_rules": [],
   "reference_map": {
     "primary_reference_field": "reference_no",
@@ -36,7 +55,11 @@
   },
   "relation_rules": {
     "parent_doc": null,
-    "child_docs": [],
+    "child_docs": [
+      "wallet_provider_profile",
+      "mobile_money_transaction",
+      "cash_position_snapshot"
+    ],
     "show_related_panel": true
   },
   "borrowed_fields": [
@@ -57,6 +80,39 @@
   "runtime_hints": {
     "doc_key": "wallet_settlement",
     "supports_related_lookup": true,
-    "supports_fetch_rules": true
+    "supports_fetch_rules": true,
+    "workflow_hints": {
+      "relation_context": {
+        "related_docs": [
+          "wallet_provider_profile",
+          "mobile_money_transaction",
+          "cash_position_snapshot"
+        ],
+        "borrowed_fields": [
+          "provider identity from wallet_provider_profile"
+        ],
+        "inferred_roles": [
+          "finance officer"
+        ]
+      },
+      "actors": [
+        "finance officer"
+      ],
+      "action_actors": {
+        "record": [
+          "finance officer"
+        ],
+        "review": [
+          "finance officer"
+        ],
+        "reconcile": [
+          "finance officer"
+        ],
+        "archive": [
+          "finance officer"
+        ]
+      }
+    },
+    "action_side_effects_file": "side_effects.json"
   }
 }

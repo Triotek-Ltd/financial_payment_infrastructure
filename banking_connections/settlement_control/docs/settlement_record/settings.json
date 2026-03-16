@@ -35,7 +35,32 @@
       "show_in_related_panel": true
     }
   ],
-  "lookup_rules": [],
+  "lookup_rules": [
+    {
+      "field_id": "related_bank_connection",
+      "doc_id": "bank_connection",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    },
+    {
+      "field_id": "related_bank_transfer_request",
+      "doc_id": "bank_transfer_request",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    },
+    {
+      "field_id": "related_treasury_movement",
+      "doc_id": "treasury_movement",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    },
+    {
+      "field_id": "related_cash_position_snapshot",
+      "doc_id": "cash_position_snapshot",
+      "lookup_mode": "multiple",
+      "purpose": "relation_collection"
+    }
+  ],
   "fetch_rules": [],
   "reference_map": {
     "primary_reference_field": "reference_no",
@@ -43,7 +68,12 @@
   },
   "relation_rules": {
     "parent_doc": null,
-    "child_docs": [],
+    "child_docs": [
+      "bank_connection",
+      "bank_transfer_request",
+      "treasury_movement",
+      "cash_position_snapshot"
+    ],
     "show_related_panel": true
   },
   "borrowed_fields": [
@@ -67,6 +97,41 @@
   "runtime_hints": {
     "doc_key": "settlement_record",
     "supports_related_lookup": true,
-    "supports_fetch_rules": true
+    "supports_fetch_rules": true,
+    "workflow_hints": {
+      "relation_context": {
+        "related_docs": [
+          "bank_connection",
+          "bank_transfer_request",
+          "treasury_movement",
+          "cash_position_snapshot"
+        ],
+        "borrowed_fields": [
+          "source account",
+          "institution from bank_connection"
+        ],
+        "inferred_roles": [
+          "finance officer"
+        ]
+      },
+      "actors": [
+        "finance officer"
+      ],
+      "action_actors": {
+        "create": [
+          "finance officer"
+        ],
+        "review": [
+          "finance officer"
+        ],
+        "reconcile": [
+          "finance officer"
+        ],
+        "archive": [
+          "finance officer"
+        ]
+      }
+    },
+    "action_side_effects_file": "side_effects.json"
   }
 }
